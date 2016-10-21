@@ -74,12 +74,19 @@ public class NotificationMessageHandler implements MessageHandler {
     NotificationCompat.Builder builder =
         new NotificationCompat.Builder(context)
             .setDefaults(Notification.DEFAULT_ALL)
-            .setSmallIcon(context.getApplicationInfo().icon)
             .setWhen(System.currentTimeMillis())
             .setContentTitle(title != null ? title : appName)
             .setTicker(appName)
             .setAutoCancel(true)
             .setContentIntent(contentIntent);
+
+    int pushIcon = context.getResources().getIdentifier("ic_push", "drawable", context.getPackageName());
+    if(pushIcon != 0){
+        builder.setSmallIcon(pushIcon);
+    }
+    else{
+        builder.setSmallIcon(context.getApplicationInfo().icon);
+    }
 
     Collection<Message> messageList = store.readAll();
     NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
