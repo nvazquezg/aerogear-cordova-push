@@ -24,6 +24,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 
 import org.jboss.aerogear.android.store.DataManager;
 import org.jboss.aerogear.android.store.sql.SQLStore;
@@ -83,6 +86,9 @@ public class NotificationMessageHandler implements MessageHandler {
     int pushIcon = context.getResources().getIdentifier("ic_push", "drawable", context.getPackageName());
     if(pushIcon != 0){
         builder.setSmallIcon(pushIcon);
+        Bitmap bm = BitmapFactory.decodeResource(context.getResources(), context.getApplicationInfo().icon);
+        builder.setLargeIcon(bm);
+        builder.setColor(Color.rgb(0,82,61));
     }
     else{
         builder.setSmallIcon(context.getApplicationInfo().icon);
