@@ -57,18 +57,20 @@ public class PushHandlerActivity extends Activity {
    */
   private void processPushBundle(boolean isPushPluginActive) {
     Store<Message> store = DataManager.getStore("messageStore");
-    Collection<Message> collection = store.readAll();
+    if(store != null){
+      Collection<Message> collection = store.readAll();
 
-    for (Message message : collection) {
-      Bundle originalExtras = message.toBundle();
-      if (!isPushPluginActive) {
-        originalExtras.putBoolean("coldstart", true);
+      for (Message message : collection) {
+        Bundle originalExtras = message.toBundle();
+        if (!isPushPluginActive) {
+          originalExtras.putBoolean("coldstart", true);
+        }
+
+        PushPlugin.sendMessage(originalExtras);
       }
 
-      PushPlugin.sendMessage(originalExtras);
+      store.reset();
     }
-
-    store.reset();
   }
 
   /**
