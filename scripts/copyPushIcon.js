@@ -24,12 +24,13 @@ module.exports = function(ctx) {
             if (fs.existsSync(srcfile)) {
                 fs.createReadStream(srcfile).pipe(
                     fs.createWriteStream(destfile));
+                deferral.resolve("Copied "+srcfile+" to "+destfile);
             }
             else if(!fs.existsSync(srcfile)){
-                console.log("Create a custom silhouette icon for push notifications in android 21+ and save it in: " + srcfile);
+                deferral.resolve("Create a custom silhouette icon for push notifications in android 21+ and save it in: " + srcfile);
             }
             else{
-                console.log("Targer directory doesn't exist: " + destdir);
+                deferral.reject("Targer directory doesn't exist: " + destdir);
             }
         });
     });
