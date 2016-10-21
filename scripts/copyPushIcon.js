@@ -8,7 +8,6 @@ module.exports = function(ctx) {
     var fs = ctx.requireCordovaModule('fs');
     var path =  ctx.requireCordovaModule('path');
 
-// no need to configure below
     var rootdir = process.argv[2];
 
     filestocopy.forEach(function(obj) {
@@ -18,9 +17,11 @@ module.exports = function(ctx) {
             var destfile = path.join(rootdir, val);
             //console.log("copying "+srcfile+" to "+destfile);
             var destdir = path.dirname(destfile);
-            fs.mkdir(destdir);
+            if(!fs.existsSync(destdir)){
+                fs.mkdirSync(destdir);
+            }
             
-            if (fs.existsSync(srcfile) && fs.existsSync(destdir)) {
+            if (fs.existsSync(srcfile)) {
                 fs.createReadStream(srcfile).pipe(
                     fs.createWriteStream(destfile));
             }
