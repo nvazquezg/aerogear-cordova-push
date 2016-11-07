@@ -2,7 +2,6 @@ repositories {
     mavenLocal()
 }
 
-cdvMinSdkVersion = 16
 cdvPluginPostBuildExtras << {
     apply plugin: 'com.google.gms.google-services'
 }
